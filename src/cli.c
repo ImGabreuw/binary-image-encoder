@@ -1,16 +1,28 @@
 #include "../include/parser.h"
 #include "../include/cli.h"
+#include "../include/encoder.h"
 
 int main(int argc, char const *argv[])
 {
-    if (argc < 2 || strcmp(argv[1], "-?") == 0 || strcmp(argv[1], "--help") == 0)
+    if (argc == 2)
     {
-        help();
+        if (strcmp(argv[1], "-?") == 0 || strcmp(argv[1], "--help") == 0)
+        {
+            help();
+            return 0;
+        }
+
+        manual(argc, argv);
         return 0;
     }
 
-    manual(argc, argv);
-    file(argc, argv);
+    if (argc == 3)
+    {
+        file(argc, argv);
+        return 0;
+    }
+
+    help();
 
     return 0;
 }
@@ -27,12 +39,6 @@ void help()
 
 void manual(int argc, char const *argv[])
 {
-    if (argc < 2)
-    {
-        puts("Argumentos inválidos. Use a opção --help.");
-        exit(1);
-    }
-
     if (strcmp(argv[1], "-m") != 0 && strcmp(argv[1], "--manual") != 0)
     {
         return;
@@ -64,30 +70,16 @@ void manual(int argc, char const *argv[])
         }
     }
 
-    // TODO Chamar a função de encoding
+    char *code = malloc(1);
+    code[0] = '\0';
+    encode(img, 0, img.height - 1, 0, img.width - 1, code);
+    printf("%s\n", code);
 
-    printf("%d\n", img.width);
-    printf("%d\n", img.height);
-
-    for (int i = 0; i < img.height; ++i)
-    {
-        for (int j = 0; j < img.width; ++j)
-        {
-            printf("%d ", img.pixels[i * img.width + j]);
-        }
-
-        printf("\n");
-    }
+    free(code);
 }
 
 void file(int argc, char const *argv[])
 {
-    if (argc < 3)
-    {
-        puts("Argumentos inválidos. Use a opção --help.");
-        exit(1);
-    }
-
     if (strcmp(argv[1], "-f") != 0 && strcmp(argv[1], "--file") != 0)
     {
         return;
@@ -95,18 +87,10 @@ void file(int argc, char const *argv[])
 
     Image img = read_binary_image(argv[2]);
 
-    // TODO Chamar a função de encoding
+    char *code = malloc(1);
+    code[0] = '\0';
+    encode(img, 0, img.height - 1, 0, img.width - 1, code);
+    printf("%s\n", code);
 
-    printf("%d\n", img.width);
-    printf("%d\n", img.height);
-
-    for (int i = 0; i < img.height; ++i)
-    {
-        for (int j = 0; j < img.width; ++j)
-        {
-            printf("%d ", img.pixels[i * img.width + j]);
-        }
-
-        printf("\n");
-    }
+    free(code);
 }

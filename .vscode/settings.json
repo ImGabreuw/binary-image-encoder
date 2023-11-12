@@ -6,6 +6,7 @@
         "*.tsx": "typescriptreact",
         "parser.h": "c",
         "algorithm": "c",
-        "cli.h": "c"
+        "cli.h": "c",
+        "encoder.h": "c"
     }
 }
