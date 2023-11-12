@@ -2,37 +2,62 @@
 
 bool is_pbm_file(FILE *image_file)
 {
-    char first_line[PBM_CODE_SIZE];
-    fscanf(image_file, "%[^\n]", first_line);
-    return strcmp(first_line, "P1");
+    char magic_number[MAX_LINE_SIZE];
+    fgets(magic_number, MAX_LINE_SIZE, image_file);
+    return magic_number[0] != 'P' || magic_number[1] != '1';
 }
 
-int *read_binary_image(char path[])
+Image read_binary_image(char path[])
 {
-    FILE *image_file = fopen(path, "r");
+    FILE *file = fopen(path, "r");
 
-    int width = 0;
-    int height = 0;
-    int *image = (int *)malloc(0);
-
-    char line[MAX_LINE_SIZE];
-    while (fgets(line, MAX_LINE_SIZE, image_file) != NULL)
+    if (file == NULL)
     {
-        if (line[0] == '#')
-            continue;
+        perror("Erro ao abrir o arquivo");
+        exit(EXIT_FAILURE);
+    }
 
-        realloc(image, width * ++height * sizeof(int));
+    Image img;
+    img.width = 0;
+    img.height = 0;
+    img.pixels = NULL;
 
-        char *bits = strtok(line, " ");
-        int bits_size = sizeof(bits) / sizeof(bits[0]);
+    char magic_number[MAX_LINE_SIZE];
+    fgets(magic_number, MAX_LINE_SIZE, file);
 
-        for (int i = 0; i < bits_size; ++i)
+    if (!is_pbm_file(file))
+    {
+        fprintf(stderr, "Formato PBM inválido\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Ignorar comentários
+    char line[MAX_LINE_SIZE];
+    while (fgets(line, MAX_LINE_SIZE, file) != NULL)
+    {
+        if (line[0] != '#')
         {
-            realloc(image, ++width * height * sizeof(int));
-            int offset = height - 1 + i;
-            image[offset] = bits[i];
+            break;
         }
     }
 
-    return image;
+    // Ler largura e altura de forma segura
+    sscanf(line, "%d %d", &img.width, &img.height);
+
+    img.pixels = (int *)malloc(img.width * img.height * sizeof(int));
+
+    // Ler os pixels
+    for (int i = 0; i < img.height; ++i)
+    {
+        for (int j = 0; j < img.width; ++j)
+        {
+            int pixel;
+            fscanf(file, "%d", &pixel);
+            img.pixels[i * img.width + j] = pixel;
+        }
+
+    }
+
+    fclose(file);
+    return img;
 }

@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "parser.h": "c"
+        ".sequelizerc": "javascript",
+        ".stylelintrc": "json",
+        ".prettierrc": "json",
+        "*.tsx": "typescriptreact",
+        "parser.h": "c",
+        "algorithm": "c"
     }
 }
