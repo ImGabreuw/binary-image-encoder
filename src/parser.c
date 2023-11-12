@@ -9,9 +9,9 @@ bool is_pbm_file(FILE *image_file)
 
 Image read_binary_image(char path[])
 {
-    FILE *file = fopen(path, "r");
+    FILE *image_file = fopen(path, "r");
 
-    if (file == NULL)
+    if (image_file == NULL)
     {
         perror("Erro ao abrir o arquivo");
         exit(EXIT_FAILURE);
@@ -22,10 +22,7 @@ Image read_binary_image(char path[])
     img.height = 0;
     img.pixels = NULL;
 
-    char magic_number[MAX_LINE_SIZE];
-    fgets(magic_number, MAX_LINE_SIZE, file);
-
-    if (!is_pbm_file(file))
+    if (!is_pbm_file(image_file))
     {
         fprintf(stderr, "Formato PBM inválido\n");
         exit(EXIT_FAILURE);
@@ -33,7 +30,7 @@ Image read_binary_image(char path[])
 
     // Ignorar comentários
     char line[MAX_LINE_SIZE];
-    while (fgets(line, MAX_LINE_SIZE, file) != NULL)
+    while (fgets(line, MAX_LINE_SIZE, image_file) != NULL)
     {
         if (line[0] != '#')
         {
@@ -52,12 +49,12 @@ Image read_binary_image(char path[])
         for (int j = 0; j < img.width; ++j)
         {
             int pixel;
-            fscanf(file, "%d", &pixel);
+            fscanf(image_file, "%d", &pixel);
             img.pixels[i * img.width + j] = pixel;
         }
 
     }
 
-    fclose(file);
+    fclose(image_file);
     return img;
 }
