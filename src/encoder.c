@@ -8,7 +8,7 @@ void encode(Image img, int startRow, int endRow, int startCol, int endCol, char 
     return; // Caso base: subimagem inválida
   }
 
-  // Verificar se a imagem é uniforme (regra 1)
+  // Verificar se a imagem é uniforme
   int isUniform = 1;
   int firstPixel = img.pixels[startRow * img.width + startCol];
 
@@ -28,14 +28,14 @@ void encode(Image img, int startRow, int endRow, int startCol, int endCol, char 
     }
   }
 
-  // Se for uniforme, adicionar o código correspondente (regra 1)
+  // Se for uniforme, adicionar o código correspondente
   if (isUniform)
   {
     sprintf(code, "%s%c", code, (firstPixel == 0) ? 'B' : 'P');
   }
   else
   {
-    // Se não for uniforme, adicionar 'X' e dividir a imagem em 4 quadrantes (regra 2)
+    // Se não for uniforme, adicionar 'X' e dividir a imagem em 4 quadrantes
     sprintf(code, "%sX", code);
 
     int midRow = (startRow + endRow) / 2;
