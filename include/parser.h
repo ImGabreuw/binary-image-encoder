@@ -16,6 +16,6 @@ typedef struct {
 
 bool is_pbm_file(FILE *image);
 
-Image read_binary_image(char path[]);
+Image read_binary_image(const char path[]);
 
 #endif // BINARY_IMAGE_ENCODER_INCLUDE_PARSER

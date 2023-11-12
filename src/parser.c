@@ -4,10 +4,10 @@ bool is_pbm_file(FILE *image_file)
 {
     char magic_number[MAX_LINE_SIZE];
     fgets(magic_number, MAX_LINE_SIZE, image_file);
-    return magic_number[0] != 'P' || magic_number[1] != '1';
+    return magic_number[0] == 'P' || magic_number[1] == '1';
 }
 
-Image read_binary_image(char path[])
+Image read_binary_image(const char path[])
 {
     FILE *image_file = fopen(path, "r");
 

@@ -5,6 +5,7 @@
         ".prettierrc": "json",
         "*.tsx": "typescriptreact",
         "parser.h": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "cli.h": "c"
     }
 }
