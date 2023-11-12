@@ -50,7 +50,7 @@ void manual(int argc, char const *argv[])
     for (int i = 0; i < img.height; ++i)
     {
         char line[MAX_LINE_SIZE];
-        scanf(" %[^\n]", line);
+        scanf(" %[^\n]", line); // Adicionando um espaço antes de %[^\n] para consumir o \n no buffer ("line")
 
         char *token = strtok(line, " ");
         int j = 0;
