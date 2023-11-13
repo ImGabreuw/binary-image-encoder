@@ -1,7 +1,10 @@
 #ifndef BINARY_IMAGE_ENCODER_INCLUDE_ENCODER
+#define BINARY_IMAGE_ENCODER_INCLUDE_ENCODER
 
 #include <stdbool.h>
 #include <stdlib.h>
+
+#include "image.h"
 
 bool is_uniform(Image image, int start_row, int end_row, int start_col, int end_col);
 

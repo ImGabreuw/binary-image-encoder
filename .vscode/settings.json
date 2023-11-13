@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "parser.h": "c",
-        "encoder.h": "c"
+        "encoder.h": "c",
+        "image.h": "c"
     }
 }

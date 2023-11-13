@@ -5,14 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "image.h"
+
 #define PBM_CODE_SIZE 2
 #define MAX_LINE_SIZE 1024
-
-typedef struct {
-    int width;
-    int height;
-    int *pixels;
-} Image;
 
 bool is_pbm_file(FILE *image);
 
