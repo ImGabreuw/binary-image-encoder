@@ -28,18 +28,8 @@ Image read_binary_image(const char path[])
         exit(EXIT_FAILURE);
     }
 
-    // Ignorar comentários
-    char line[MAX_LINE_SIZE];
-    while (fgets(line, MAX_LINE_SIZE, image_file) != NULL)
-    {
-        if (line[0] != '#')
-        {
-            break;
-        }
-    }
-
-    // Ler largura e altura de forma segura
-    sscanf(line, "%d %d", &img.width, &img.height);
+    // Ler largura e altura do arquivo no formato "número número"
+    fscanf(image_file, "%d %d", &img.width, &img.height);
 
     img.pixels = (int *)malloc(img.width * img.height * sizeof(int));
 

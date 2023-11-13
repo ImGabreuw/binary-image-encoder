@@ -31,11 +31,13 @@ void encode(Image img, int startRow, int endRow, int startCol, int endCol, char 
   // Se for uniforme, adicionar o código correspondente
   if (isUniform)
   {
+    code = realloc(code, strlen(code) + 2);
     sprintf(code, "%s%c", code, (firstPixel == 0) ? 'B' : 'P');
   }
   else
   {
     // Se não for uniforme, adicionar 'X' e dividir a imagem em 4 quadrantes
+    code = realloc(code, strlen(code) + 2);
     sprintf(code, "%sX", code);
 
     int midRow = (startRow + endRow) / 2;
