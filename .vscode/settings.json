@@ -1,12 +1,7 @@
 {
     "files.associations": {
-        ".sequelizerc": "javascript",
-        ".stylelintrc": "json",
-        ".prettierrc": "json",
-        "*.tsx": "typescriptreact",
         "parser.h": "c",
-        "algorithm": "c",
-        "cli.h": "c",
-        "encoder.h": "c"
+        "encoder.h": "c",
+        "image.h": "c"
     }
 }

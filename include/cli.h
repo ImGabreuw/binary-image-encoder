@@ -1,4 +1,5 @@
 #ifndef BINARY_IMAGE_ENCODER_INCLUDE_CLI
+#define BINARY_IMAGE_ENCODER_INCLUDE_CLI
 
 #include <stdio.h>
 
