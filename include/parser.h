@@ -4,10 +4,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "image.h"
 
-#define PBM_CODE_SIZE 2
+#define PBM_CODE_SIZE 3
 #define MAX_LINE_SIZE 1024
 
 bool is_pbm_file(FILE *image);

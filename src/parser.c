@@ -2,9 +2,9 @@
 
 bool is_pbm_file(FILE *image_file)
 {
-    char magic_number[MAX_LINE_SIZE];
-    fgets(magic_number, MAX_LINE_SIZE, image_file);
-    return magic_number[0] == 'P' || magic_number[1] == '1';
+    char magic_number[PBM_CODE_SIZE];
+    fscanf(image_file, "%2s", magic_number);
+    return strcmp(magic_number, "P1") == 0;
 }
 
 Image read_binary_image(const char path[])
@@ -28,8 +28,23 @@ Image read_binary_image(const char path[])
         exit(EXIT_FAILURE);
     }
 
-    // Ler largura e altura do arquivo no formato "número número"
-    fscanf(image_file, "%d %d", &img.width, &img.height);
+    // Ingnorar comentários
+    int break_char;
+    while ((break_char = fgetc(image_file)) == '#' || isspace(break_char))
+    {
+        if (break_char == '#')
+        {
+            fscanf(image_file, "%*[^\n]"); // Pular a linha de comentário
+        }
+    }
+    ungetc(break_char, image_file); // Devolver o caractere que encerrou o loop
+
+    // Ler largura e altura do arquivo
+    if (fscanf(image_file, "%d %d", &img.width, &img.height) != 2)
+    {
+        fprintf(stderr, "Error reading width and height.\n");
+        exit(EXIT_FAILURE);
+    }
 
     img.pixels = (int *)malloc(img.width * img.height * sizeof(int));
 
@@ -42,7 +57,6 @@ Image read_binary_image(const char path[])
             fscanf(image_file, "%d", &pixel);
             img.pixels[i * img.width + j] = pixel;
         }
-
     }
 
     fclose(image_file);
