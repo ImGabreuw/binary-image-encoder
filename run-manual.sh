@@ -8,9 +8,11 @@ if [ ! -f "$expected_results_path" ]; then
 fi
 
 expected_results=()
+counter=0
 
-while IFS= read -r line; do
-  expected_results+=("$line")
+while IFS= read -r line || [ -n "$line" ]; do
+  expected_results["$counter"]="$line"
+  ((counter++))
 done <"$expected_results_path"
 
 clear && gcc -o main $(find . -name "*.c") -lm
@@ -23,11 +25,13 @@ for input in $input_files; do
 
   expected_result=${expected_results[$index]}
 
-  if [ -n "$result" ] && [ "$result" == "$expected_result" ]; then
+  if [ "$result" == "$expected_result" ]; then
     echo -e "\e[32mTest passed: $input\e[0m"
-    echo "Image code $result"
+    echo "Image code: $result"
   else
     echo -e "\e[31mTest failed: $input\e[0m"
+    echo "Expected: $expected_result"
+    echo "Got: $result"
   fi
 
   ((index++))

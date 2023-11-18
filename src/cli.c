@@ -70,7 +70,7 @@ void manual(int argc, char const *argv[])
         }
     }
 
-    char *code = malloc(1);
+    char *code = (char *)malloc(sizeof(char));
     code[0] = '\0';
     encode(img, 0, img.height - 1, 0, img.width - 1, code);
     printf("%s\n", code);
@@ -87,7 +87,7 @@ void file(int argc, char const *argv[])
 
     Image img = read_binary_image(argv[2]);
 
-    char *code = malloc(1);
+    char *code = (char *)malloc(sizeof(char));
     code[0] = '\0';
     encode(img, 0, img.height - 1, 0, img.width - 1, code);
     printf("%s\n", code);
